@@ -4,7 +4,7 @@
 
 We want to be able to build nodejs servers using https on localhost to mirror a production environment, and the easiest way to do that is to use the built-in https module. However this module requires we provide our own ssl certificates for localhost. We want a self-signed certificate that can be accepted by both common browsers and other nodejs client applications. That means we need a certificate that identifies itself as localhost, and is signed by a trusted CA. This is made a little bit harder by the fact that we're working on Windows.
 
-## The Process
+## The process
 
 First we need some [openssl binaries](https://wiki.openssl.org/index.php/Binaries) that have been built for Windows. Download those and link them in your PATH. All of the commands we're running here are in Powershell and assume you have access to a standard implementation of openssl.
 
