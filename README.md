@@ -8,7 +8,7 @@ We want to be able to build nodejs servers using https on localhost to mirror a 
 
 First we need some [openssl binaries](https://wiki.openssl.org/index.php/Binaries) that have been built for Windows. Download those and link them in your PATH. All of the commands we're running here are in Powershell and assume you have access to a standard implementation of openssl.
 
-Then we'll create a CA keypair, which we'll call localCA, which we can use for signing. We put these options in [a configuration file](../blob/master/ssl/CAopts.conf) and create the keypair
+Then we'll create a CA keypair, which we'll call localCA, which we can use for signing. We put these options in [a configuration file](./ssl/CAopts.conf) and create the keypair
 ```
 openssl genrsa -des3 -out rootCA.key -passout pass:password 4096
 openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 365 -out rootCA.crt -config CAopts.conf -passin pass:password
@@ -16,7 +16,7 @@ openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 365 -out rootCA.crt 
 
 Notably we need a root CA so that the server certificate we generate is properly signed and chained, and the CA's common name needs to be different from our server certificate's common name so it doesn't appear self-signed.
 
-Next we put the options for our server certificate in [its own configuration file](../blob/master/ssl/opts.conf), and also create a [file for its v3 extension options](../blob/master/ssl/v3.ext). The extension options define our certificate's alternate domains and intended usage. If these are missing Chrome will reject our certificate no matter what else we do. Finally we can generate a server keypair
+Next we put the options for our server certificate in [its own configuration file](./ssl/opts.conf), and also create a [file for its v3 extension options](./ssl/v3.ext). The extension options define our certificate's alternate domains and intended usage. If these are missing Chrome will reject our certificate no matter what else we do. Finally we can generate a server keypair
 ```
 openssl genrsa -out server.key 2048 -config opts.conf
 openssl req -new -key server.key -out server.csr -config opts.conf
